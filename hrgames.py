@@ -1,8 +1,9 @@
-# Imports
 import numpy as np
 
 
 def hr_egn(A, B, R, x0):
+    """Takes the adjacency matrix, payment matrix (or matrices), relationship matrix and initial state
+       of all vertices to return the increments in each strategy for each vertex"""
     # A  - Adjacency matrix, np.ndarray (N,N)
     # B  - A 2D or 3D matrix with all payoff matrices, np.ndarray (S,S,N)
     # R  - Relationship or preference matrix, np.ndarray (N,N)
@@ -108,16 +109,43 @@ def hr_egn(A, B, R, x0):
                 p = 0
                 g = 0
                 es[s] = 0
+    return x
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def hr_game(t0, tf, n, A, B, R, x0):
+    """Takes a time interval, number of steps, adjacency matrix, payment matrix (or matrices),
+       relationship matrix and initial state of all vertices to return the result of the
+       hyper-rational evolutionary game played on the given graph in that time interval"""
+    # t0 - Initial time
+    # tf - Final time
+    # n - Number of steps
+    # A - Adjacency matrix, np.ndarray (N,N)
+    # B  - A 2D or 3D matrix with all payoff matrices, np.ndarray (S,S,N)
+    # R  - Relationship or preference matrix, np.ndarray (N,N)
+    # x0 - Initial state of our system, np.ndarray (N,S), must be double
 
+    # Number of players
+    N = A[:, 0].size
+    # Number of strategies
+    S = B[:, 0].size
+    # Degree and degree of preferences
+    d = np.zeros([N, 2])
+    d[:, 0] = np.dot(A, np.ones(N))
+    # Step in each iteration
+    h = (tf - t0) / n
+    # Result of each step, np.ndarray (N, S, n+1)
+    y = np.zeros([N, S, n+1], dtype='double')
+    y[:, :, 0] = x0
+    k = np.zeros([N, S])
 
-if __name__ == '__main__':
-    # Main procedure, that runs the test received as parameter
-    print_hi('PyCharm')
+    # Fourth order Runge-Kutta
+    for t in range(n):
+        k1 = np.multiply(h, hr_egn(A, B, R, y[:, :, t]))
+        k2 = h * hr_egn(A, B, R, np.add(y[:, :, t], np.divide(k1/2)))
+        k3 = h * hr_egn(A, B, R, np.add(y[:, :, t], np.divide(k2/2)))
+        k4 = h * hr_egn(A, B, R, np.add(y[:, :, t], k3))
+        # k = (k1 + 2*k2 + 2*k3 + k4)/6
+        k = np.divide(np.add(np.add(k1, np.multiply(2, k2)), np.add(np.multiply(2, k3), k4)), 6)
+        y[:, :, t+1] = np.add(y[:, :, t], k)
 
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    return y
