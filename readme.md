@@ -34,5 +34,5 @@
   
   We define <a href="https://www.codecogs.com/eqnedit.php?latex=\bg_white&space;\rho_{v,s}=\pi_v(e_s,x_{-v})" target="_blank"><img src="https://latex.codecogs.com/png.latex?\bg_white&space;\rho_{v,s}=\pi_v(e_s,x_{-v})" title="\rho_{v,s}=\pi_v(e_s,x_{-v})" /></a>
   as the payment of the pure strategy *s* and <a href="https://www.codecogs.com/eqnedit.php?latex=\bg_white&space;\phi_v=\pi_v(x_v,x_{-v})" target="_blank"><img src="https://latex.codecogs.com/png.latex?\bg_white&space;\phi_v=\pi_v(x_v,x_{-v})" title="\phi_v=\pi_v(x_v,x_{-v})" /></a>
-  as the expect payoff of the mixed strategy <a href="https://www.codecogs.com/eqnedit.php?latex=\bg_white&space;x_v" target="_blank"><img src="https://latex.codecogs.com/png.latex?\bg_white&space;x_v" title="x_v" /></a>
+  as the expected payoff of the mixed strategy <a href="https://www.codecogs.com/eqnedit.php?latex=\bg_white&space;x_v" target="_blank"><img src="https://latex.codecogs.com/png.latex?\bg_white&space;x_v" title="x_v" /></a>
   of *v*.
