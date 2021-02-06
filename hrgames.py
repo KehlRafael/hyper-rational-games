@@ -127,13 +127,15 @@ def hr_game(t0, tf, n, A, B, R, x0):
     # Number of players
     N = A[:, 0].size
     # Number of strategies
-    S = B[:, 0].size
+    S = x0[0,:].size
     # Step in each iteration
     h = (tf - t0) / n
     # Result of each step, np.ndarray (N, S, n+1)
     y = np.zeros([N, S, n+1], dtype='double')
     y[:, :, 0] = x0
     k = np.zeros([N, S])
+    # I still don't know why, but theres a problem with negative payoffs
+    B = matrixTranslate(B)
 
     # Fourth order Runge-Kutta
     for t in range(n):
@@ -155,3 +157,10 @@ def hr_game(t0, tf, n, A, B, R, x0):
                     y[v, s, t + 1] = 1
 
     return y
+
+
+def matrixTranslate(b):
+    '''Do a translation on b, a numpy ndarray, so all its values are positive'''
+    if b.min() < 0:
+        b = np.add(b, np.abs(b.min()))
+    return b

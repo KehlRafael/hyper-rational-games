@@ -61,8 +61,6 @@ def classic_pd_negative():
     B[0, 1] = -7  # S
     B[1, 0] = 0  # T
     B[1, 1] = -5  # P
-    # I still don't know why, but theres a problem with negative payoffs
-    B = np.add(B, np.abs(B.min()))
     # Relationship matrix
     R = np.zeros([2, 2], dtype='double')
     R[0, 0] = 5/7 - 0.05
