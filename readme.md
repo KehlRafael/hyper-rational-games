@@ -2,7 +2,7 @@
   This project is a solver for the Cauchy problem proposed on my master's degree final project, still to be published. 
   [hrgames.py](hrgames.py) is module with two functions, one that receives the adjacency matrix, payoff matrices, relationship matrix and initial state of the system to return
   the increments in each strategy for each vertex, the second receives the same parameters plus a time interval and number of steps and returns the state of the system after the game
-  is played through that time interval. [examples.py](examples.py) has a collection of examples made by myself.
+  is played through that time interval. [examples.py](examples.py) has a collection of examples made by myself and contributors.
   
   ## Usage
   To run the [hrgames](hrgames.py) module you must have Numpy installed. To run any examples from [examples.py](examples.py) you'll need Numpy, Matplotlib and, obviously, the hrgames module.
