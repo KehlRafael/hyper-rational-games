@@ -12,21 +12,21 @@ def hr_egn(A, B, R, x0):
     # Number of players
     N = A[:, 0].size
     # Number of strategies
-    S = B[:, 0].size
+    S = x0[0, :].size
     # Degree and degree of preferences
     d = np.zeros([N, 2])
     d[:, 0] = np.dot(A, np.ones(N))
 
     for v in range(N):
-        d[v, 1] = np.dot(np.ceil(np.abs(R[v, :])), A[:, v])
+        d[v, 1] = np.dot(np.ceil(np.abs(R[v, :])), A[v, :])
 
     # Player v neighborhood
     k = np.zeros([N, S], dtype='double')
     for v in range(N):
         for u in range(N):
-            k[:, v] = np.add(k[:, v], np.multiply(A[v, u], x0[u, :]))
+            k[v, :] = np.add(k[v, :], np.multiply(A[v, u], x0[u, :]))
         # Weights the neighborhood
-        k[:, v] = np.multiply(np.divide(1, d[v, 0]), k[v, :])
+        k[v, :] = np.multiply(np.divide(1, d[v, 0]), k[v, :])
 
     # This variable is the increments that x0 receives, the derivative
     x = np.zeros([N, S], dtype='double')
@@ -43,7 +43,7 @@ def hr_egn(A, B, R, x0):
 
     # Here is the derivative calculation
     # We first test if all payoffs are the same so we do less comparisons
-    if B.ndim == 3:
+    if B.ndim == 2:
         for v in range(N):
             for s in range(S):
                 # Set es value
@@ -92,9 +92,9 @@ def hr_egn(A, B, R, x0):
                         p = np.multiply(R[v, u], np.subtract(aux1, aux2))
                     elif A[v, u] != 0:
                         # Individual payoffs social equation
-                        # x_u*B_v*e_s
+                        # x_u*B_u*e_s
                         aux1 = np.dot(x0[u, :], np.dot(B[:, :, u], es))
-                        # x_u*B*x_v
+                        # x_u*B_u*x_v
                         aux2 = np.dot(x0[u, :], np.dot(B[:, :, u], x0[v, :]))
                         # Subtract then multiply
                         aux1 = np.subtract(aux1, aux2)
@@ -128,9 +128,6 @@ def hr_game(t0, tf, n, A, B, R, x0):
     N = A[:, 0].size
     # Number of strategies
     S = B[:, 0].size
-    # Degree and degree of preferences
-    d = np.zeros([N, 2])
-    d[:, 0] = np.dot(A, np.ones(N))
     # Step in each iteration
     h = (tf - t0) / n
     # Result of each step, np.ndarray (N, S, n+1)
@@ -141,11 +138,20 @@ def hr_game(t0, tf, n, A, B, R, x0):
     # Fourth order Runge-Kutta
     for t in range(n):
         k1 = np.multiply(h, hr_egn(A, B, R, y[:, :, t]))
-        k2 = h * hr_egn(A, B, R, np.add(y[:, :, t], np.divide(k1/2)))
-        k3 = h * hr_egn(A, B, R, np.add(y[:, :, t], np.divide(k2/2)))
-        k4 = h * hr_egn(A, B, R, np.add(y[:, :, t], k3))
+        k2 = np.multiply(h, hr_egn(A, B, R, np.add(y[:, :, t], np.divide(k1, 2))))
+        k3 = np.multiply(h, hr_egn(A, B, R, np.add(y[:, :, t], np.divide(k2, 2))))
+        k4 = np.multiply(h, hr_egn(A, B, R, np.add(y[:, :, t], k3)))
         # k = (k1 + 2*k2 + 2*k3 + k4)/6
         k = np.divide(np.add(np.add(k1, np.multiply(2, k2)), np.add(np.multiply(2, k3), k4)), 6)
+
         y[:, :, t+1] = np.add(y[:, :, t], k)
+
+        # Filter results with machine epsilon
+        for v in range(N):
+            for s in range(S):
+                if y[v, s, t+1] < np.sqrt(np.finfo('double').eps):
+                    y[v, s, t+1] = 0
+                elif y[v, s, t+1] > np.subtract(1, np.sqrt(np.finfo('double').eps)):
+                    y[v, s, t + 1] = 1
 
     return y
