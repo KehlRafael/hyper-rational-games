@@ -127,7 +127,7 @@ def hr_game(t0, tf, n, A, B, R, x0):
     # Number of players
     N = A[:, 0].size
     # Number of strategies
-    S = x0[0,:].size
+    S = x0[0, :].size
     # Step in each iteration
     h = (tf - t0) / n
     # Result of each step, np.ndarray (N, S, n+1)
