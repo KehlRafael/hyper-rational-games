@@ -37,7 +37,7 @@
   ```
   With this you'd get the plotted results from a love triangle game where all players are selfish with half probability of using either strategy for 200 time iterations.
   
-  There are many interesting games out there that were still no simulated as a hyper-rational game, so feel free to add any new or different examples!
+  There are many interesting games out there that were still not simulated as a hyper-rational game, so feel free to add any new or different examples!
   
   ## Problem description
   This script solves the replicator equation Cauchy problem given by:
