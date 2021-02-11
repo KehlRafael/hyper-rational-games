@@ -18,8 +18,27 @@
   Where `example_name` can be any of the following:
   - classic_pd
   - classic_pd_negative
+  - hinge_love_triangle
+  - k3_love_triangle
+  - closed_star_pd
+  - closed_star_coex
   
-  You can change any parameter directly on the script code. It's all commented and easily accessible for anyone. Feel free to add any new and interesting examples!
+  You can change any parameter directly on the script code. It's all commented and easily accessible for anyone.
+  
+  Alternatively, you can import the examples script as a module using:
+  ```
+  import examples as ex
+  ```
+  Then run any example as a function. This way you can send in the optional parameters `R`, `tf` and `xini` for the relationship matrix, final time and initial conditions, respectively. For example, one could use:
+  ```
+  >>> import examples as ex
+  >>> finalTime = 200
+  >>> initialCond = np.divide(np.ones(3,2), 2)
+  >>> ex.k3_love_triangle(R = np.eye(3), tf = finalTime, xini = initialCond)
+  ```
+  With this you'd get the plotted results from a love triangle game where all players are selfish with half probability of using either strategy for 200 time iterations.
+  
+  There are many interesting games out there that were still no simulated as a hyper-rational game, so feel free to add any new or different examples!
   
   ## Problem description
   This script solves the replicator equation Cauchy problem given by:
