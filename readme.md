@@ -21,6 +21,7 @@
   - k3_love_triangle
   - closed_star_pd
   - closed_star_coex
+  - simulations_madeo_mocenni
   
   You can change any parameter directly on the script code. It's all commented and easily accessible for anyone.
   
@@ -54,3 +55,6 @@
   as the payment of the pure strategy *s* and <a href="https://www.codecogs.com/eqnedit.php?latex=\bg_white&space;\phi_v=\pi_v(x_v,x_{-v})" target="_blank"><img src="https://latex.codecogs.com/png.latex?\bg_white&space;\phi_v=\pi_v(x_v,x_{-v})" title="\phi_v=\pi_v(x_v,x_{-v})" /></a>
   as the expected payoff of the mixed strategy <a href="https://www.codecogs.com/eqnedit.php?latex=\bg_white&space;x_v" target="_blank"><img src="https://latex.codecogs.com/png.latex?\bg_white&space;x_v" title="x_v" /></a>
   of *v*.
+
+ ## Notes
+  While most examples were made to be accessible for everyone with plots so you can visualize the results, the `simulations_madeo_mocenni` example is a batch with 24 simulations that Madeo and Mocenni do on their original article, [Game Interactions and Dynamics on Networked Populations](https://doi.org/10.1109/TAC.2014.2384755), but with hyper-rational agents that use half of their energy for their profit and the other half is divided equally between their neighbors. Unlike the other examples, this batch of simulations are all written to text files that can be printed using my [graph-print](https://github.com/KehlRafael/graph-print) project, more specifically with the [madeomocenniPrint](https://github.com/KehlRafael/graph-print/blob/main/madeomocenniPrint.py) script, that reads and prints all graphs at once. This example was made as a comparison between both models and the results are presented on my master's project.
