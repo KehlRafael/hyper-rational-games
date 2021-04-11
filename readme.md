@@ -1,4 +1,4 @@
-# hyper-rational-games
+# hyper-rational-games <a href="https://zenodo.org/badge/latestdoi/335705816"><img align="right" src="https://zenodo.org/badge/335705816.svg" alt="DOI"></a>
   This project is a solver for the Cauchy problem proposed on my master's degree final project, still to be published, and is under the MIT License. 
   [hrgames.py](hrgames.py) is a module with two functions, one that receives the adjacency matrix, payoff matrices, relationship matrix and initial state of the system to return
   the increments in each strategy for each vertex, the second receives the same parameters plus a time interval and number of steps and returns the state of the system after the game is played through that time interval. [examples.py](examples.py) has a collection of examples made by myself and contributors.
